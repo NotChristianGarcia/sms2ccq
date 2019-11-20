@@ -1,0 +1,8 @@
+
+dist/ccqclient-0.0.1-py3.7.egg
+.DS_Store
+build/lib/ccqclient/__init__.py
+ccqclient.egg-info/dependency_links.txt
+ccqclient.egg-info/PKG-INFO
+ccqclient.egg-info/SOURCES.txt
+ccqclient.egg-info/top_level.txt
