@@ -12,49 +12,48 @@ client = Client(account_sid, auth_token)
 app = Flask(__name__)
 
 @app.route("/sms", methods=['GET', 'POST'])
-def sms_ahoy_reply():
-	user_msg = client.messages.list(limit=1)[0].body
+def ccq_reply():
+    user_msg = client.messages.list(limit=1)[0].body
+
+    # Start our response
+    resp = MessagingResponse()
+
+    split_msg = user_msg.split()
+
+    if len(split_msg) == 1:
+        cmd = split_msg[0]
+    elif len(split_msg) == 2:
+        if split_msg[1].isdecimal():
+            cmd, jid = split_msg
+            if len(jid) != 4:
+                resp.message("Error")
+                return str(resp)
+        cmd, script_loc = split_msg
+
+    elif len(split_msg) > 2:
+        resp.message("Error")
+        return str(resp)
 
 
-	# Start our response
-	resp = MessagingResponse()
+    if cmd.lower() == "submit":
+        resp.message(f"Submission in Progress - {ccq_sub('16507999956', script_loc)}")
 
+    elif cmd.lower() == "status":
+        if 'jid' in locals():
+            resp.message(f"Status: {ccq_stat('16507999956', jid)}")
+        else:
+            resp.message(f"Statuses: {ccq_stat('16507999956', None)}")
 
-	split_msg = user_msg.split()
+    elif cmd.lower() == "delete":
+        resp.message(f"Deleted - {jid}")
 
+    elif cmd.lower() == "helpme":
+        resp.message("Commands: \n To Submit Filepath ------- submit filepath \n To View Job Status ------- status JOB-ID \n To Delete Job ------- delete JOB-ID")
 
-	if len(split_msg) == 1:
-		cmd = split_msg[0]
-	elif len(split_msg) == 2:
-		if split_msg[1].isdecimal():
-			cmd, jid = split_msg
-			if len(jid) != 4:
-				resp.message("Error")
-				return str(resp)
-		else:
-			cmd, script_loc = split_msg
+    else:
+        resp.message("Error")
 
-	elif len(split_text) > 2:
-		resp.message("Error")
-		return str(resp)
-
-
-	if cmd.lower() == "submit":
-		resp.message(f"Submission in Progress - {jid}")
-
-	elif cmd.lower() == "status":
-		resp.message(f"Status: {ccq_stat('16507999956', jid)}")
-
-	elif cmd.lower() == "delete":
-		resp.message(f"Deleted - {jid}")
-
-	elif cmd.lower() == "helpme":
-		resp.message("Commands: \n To Submit Filepath ------- submit filepath \n To View Job Status ------- status JOB-ID \n To Delete Job ------- delete JOB-ID")
-
-	else:
-		resp.message("Error")
-
-	return str(resp)
+    return str(resp)
 
 if __name__ == "__main__":
-	app.run(debug=True)
+    app.run(debug=True)

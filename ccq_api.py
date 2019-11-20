@@ -3,7 +3,7 @@ import json
 import re
 
 # default ccq instance
-hostname = 'crappieshrimpcitrine.cloudycluster.net'
+hostname = 'login-crappieshrimpcitrine.cloudycluster.net'
 username = 'sms2ccq'
 password = 'Sms2ccqsms2ccq'
 cloud = cc.CCQCloud.GCP
@@ -36,6 +36,6 @@ def ccq_sub(phone, script_loc):
     split_loc = script_loc.split('/')
     job_path = '/'.join(split_loc[:-1])
     job_name = split_loc[-1]
-    sub_res = client.ccqsub(job_path, job_name, '')
-    jid = re.findall(r"[0-9]{4}", sub_res)
+    sub_res = client.ccqsub(job_path+'/', job_name, '')
+    jid = re.findall(r"[0-9]{4}", sub_res)[0]
     return jid
