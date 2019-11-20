@@ -1,6 +1,6 @@
-import ccqclient as cc
 import json
 import re
+import ccqclient as cc
 
 # default ccq instance
 hostname = 'login-crappieshrimpcitrine.cloudycluster.net'
@@ -10,7 +10,6 @@ cloud = cc.CCQCloud.GCP
 scheduler = cc.CCQScheduler.Slurm
 
 client = cc.CCQClient(hostname, username, password, cloud, scheduler)
-
 
 def ccq_stat(phone, jid):
     if jid:
@@ -26,11 +25,13 @@ def ccq_stat(phone, jid):
             'status': res.job_status}
     return final_res
 
+
 def ccq_del(phone, jid):
     del_res = client.ccqdel(jid)
     if json.loads(del_res)['status'] == 'success':
         return 'success'
     return 'no_success'
+
 
 def ccq_sub(phone, script_loc):
     split_loc = script_loc.split('/')
