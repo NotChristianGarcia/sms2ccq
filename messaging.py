@@ -1,6 +1,7 @@
 import os
 from ccq_api import ccq_del, ccq_stat, ccq_sub
 from twilio.rest import Client
+from automation import ccq_stat_auto
 
 account_sid = "AC4d1c5954d9228371bcd3fce922093c26"
 auth_token = "071302b5888b57adbd7ac8bb3c482941"
@@ -15,7 +16,7 @@ client = Client(account_sid, auth_token)
 def process_msg():
     msg_data = client.messages.list(limit=1)[0]
     user_msg = msg_data.body
-    phone = msg_data.from_
+    phone = msg_data.from
     print(f'Processing: "{user_msg}" from "{phone}".')
 
     text_2_send = parse_msg(user_msg, phone)
@@ -41,7 +42,8 @@ def parse_msg(user_msg, phone):
 
     if cmd.lower() == "submit":
         return f"Submission in Progress - {ccq_sub(phone, script_loc)}"
-
+	ccq_stat_auto(phone, jid)
+	
     elif cmd.lower() == "status":
         if 'jid' in locals():
             return f"Status: {ccq_stat(phone, jid)}"
