@@ -1,0 +1,8 @@
+FROM node:lts-alpine3.9
+
+RUN apk add python3 expect
+RUN npm install twilio-cli@latest -g --unsafe-perm
+
+COPY twilio_cli.sh .
+
+CMD ./twilio_cli.sh

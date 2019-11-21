@@ -1,21 +1,22 @@
-# docker-compose scale spawner=8
 version: "3.3"
-
-networks:
-    abaco:
-        driver: bridge
 
 services:
     sms2ccq:
         image: notchristiangarcia/sms2ccq
         ports:
-            - "7821:7821"
+            - "5000:5000"
 
-    ngrok:
-        image: notchristiangarcia/ngrok
-
-    redis:
-        image: redis
-        ports:
-            - "6379:6379"
-
+#    twilio_cli:
+#        image: notchristiangarcia/twilio_server
+#        ports:
+#            - "${MY_DOCKER_IP:-127.0.0.1}:4040:4040"
+#        networks:
+#            - bridge2
+#        environment:
+#            - TWILIO_SERVER_URL=http://localhost:5000/sms
+#            - TWILIO_PHONE_NUM="+12055462249"
+#            - TWILIO_ALIAS_NAME=sms2ccq
+#            - TWILIO_ACC_SID=AC4d1c5954d9228371bcd3fce922093c26
+#            - TWILIO_AUTH_KEY=071302b5888b57adbd7ac8bb3c482941
+#            - TWILIO_ACCOUNT_SID=AC4d1c5954d9228371bcd3fce922093c26
+#            - TWILIO_AUTH_TOKEN=071302b5888b57adbd7ac8bb3c482941

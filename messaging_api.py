@@ -1,6 +1,8 @@
 import os
+from threading import Thread
 from ccq_api import ccq_del, ccq_stat, ccq_sub
 from twilio.rest import Client
+from automation import ccq_stat_auto
 
 account_sid = "AC4d1c5954d9228371bcd3fce922093c26"
 auth_token = "071302b5888b57adbd7ac8bb3c482941"
@@ -19,7 +21,7 @@ def process_msg():
     print(f'Processing: "{user_msg}" from "{phone}".')
 
     text_2_send = parse_msg(user_msg, phone)
-    sent_data = send_msg(text_2_send, phone)
+    sent_data = send_text(text_2_send, phone)
 
     print(f'Sending: "{sent_data.body}" to "{sent_data.to}".')
 
@@ -40,7 +42,9 @@ def parse_msg(user_msg, phone):
         return "Error"
 
     if cmd.lower() == "submit":
-        return f"Submission in Progress - {ccq_sub(phone, script_loc)}"
+        res = ccq_sub(phone, script_loc)
+        Thread(target=ccq_stat_auto, args=[phone, res]).start()
+        return f"Submission in Progress - {res}"
 
     elif cmd.lower() == "status":
         if 'jid' in locals():
@@ -49,7 +53,7 @@ def parse_msg(user_msg, phone):
             return f"Statuses: {ccq_stat(phone, None)}"
 
     elif cmd.lower() == "delete":
-        return f"Deleted - {jid}"
+        return f"Deleted - {ccq_del(phone, jid)}"
 
     elif cmd.lower() == "helpme":
         return ("Commands: \n To Submit Filepath ------- submit filepath\
@@ -60,8 +64,8 @@ def parse_msg(user_msg, phone):
         return "Error"
 
 
-def send_msg(text_2_send, phone):
+def send_text(text_2_send, phone):
     sent_data = client.messages.create(
-        body=text_2_send,
+        body=text_2_send[:1500],
         from_='+12055462249', to=phone)
     return sent_data

@@ -1,0 +1,1 @@
+echo y | twilio phone-numbers:update $TWILIO_PHONE_NUM --sms-url $TWILIO_SERVER_URL

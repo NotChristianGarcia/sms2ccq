@@ -1,4 +1,0 @@
-FROM docker pull node:lts-alpine3.9
-
-
-CMD ["python3", "./twilio/twilio_server.py"]

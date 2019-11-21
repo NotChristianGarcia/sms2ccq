@@ -1,6 +1,6 @@
 from threading import Thread
 from flask import Flask, request
-from messaging import process_msg
+from messaging_api import process_msg
 
 app = Flask(__name__)
 
@@ -10,4 +10,4 @@ def ccq_reply():
     return "You shouldn't be looking at this site!"
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

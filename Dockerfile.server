@@ -1,6 +1,6 @@
 FROM python:3.7-alpine
 
-COPY libs/ccqclient/ccqclient ./twilio/ccqclient
+COPY ccqclient ./twilio/ccqclient
 COPY ccq_api.py twilio_server.py messaging.py  ./twilio/
 
 RUN apk add --update --no-cache g++ gcc libxslt-dev

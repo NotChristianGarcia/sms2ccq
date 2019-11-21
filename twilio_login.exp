@@ -1,0 +1,13 @@
+#!/usr/bin/expect 
+
+set timeout -1
+
+spawn twilio login
+
+expect "Shorthand identifier for your profile:" {send "$env(TWILIO_ALIAS_NAME)\r"}
+
+expect "The Account SID for your Twilio Project:" {send "$env(TWILIO_ACC_SID)\r"}
+
+expect "input is hidden\] " {send "$env(TWILIO_AUTH_KEY)\r"}
+
+expect eof
