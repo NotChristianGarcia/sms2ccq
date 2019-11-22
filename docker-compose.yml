@@ -9,14 +9,10 @@ services:
 #    twilio_cli:
 #        image: notchristiangarcia/twilio_server
 #        ports:
-#            - "${MY_DOCKER_IP:-127.0.0.1}:4040:4040"
-#        networks:
-#            - bridge2
+#            - "${MY_DOCKER_IP:-127.0.0.1}:4040:4040"      # This does not work
 #        environment:
 #            - TWILIO_SERVER_URL=http://localhost:5000/sms
-#            - TWILIO_PHONE_NUM="+12055462249"
+#            - TWILIO_PHONE_NUM="####"
 #            - TWILIO_ALIAS_NAME=sms2ccq
-#            - TWILIO_ACC_SID=AC4d1c5954d9228371bcd3fce922093c26
-#            - TWILIO_AUTH_KEY=071302b5888b57adbd7ac8bb3c482941
 #            - TWILIO_ACCOUNT_SID=AC4d1c5954d9228371bcd3fce922093c26
 #            - TWILIO_AUTH_TOKEN=071302b5888b57adbd7ac8bb3c482941
