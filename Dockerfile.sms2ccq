@@ -1,0 +1,9 @@
+FROM python:3.7-alpine
+
+COPY libs/ccqclient ./sms2ccq/ccqclient
+COPY src/ccq_api.py src/sms2ccq_server.py src/messaging.py src/automation.py ./sms2ccq/
+
+RUN apk add --update --no-cache g++ gcc libxslt-dev
+RUN pip3 install flask redis twilio webdavclient3
+
+CMD ["python3", "./sms2ccq/sms2ccq_server.py"]

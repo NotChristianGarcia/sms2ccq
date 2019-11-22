@@ -3,16 +3,17 @@ from threading import Thread
 from ccq_api import ccq_del, ccq_stat, ccq_sub
 from twilio.rest import Client
 from automation import ccq_stat_auto
-
-account_sid = "AC4d1c5954d9228371bcd3fce922093c26"
-auth_token = "071302b5888b57adbd7ac8bb3c482941"
+import emoji
 
 #account_sid = os.environ.get('TWILIO_ACC_SID')
 #auth_token = os.environ.get('TWILIO_AUTH_TOK')
 #if not account_sid or not auth_token:
 #    raise ValueError('TWILIO_ACC_SID and TWILIO_AUTH_TOK envvars must be set')
-client = Client(account_sid, auth_token)
 
+account_sid = "TWILIO_SID"
+auth_token = "TWILIO_AUTH_TOKEN"
+
+client = Client(account_sid, auth_token)
 
 def process_msg():
     msg_data = client.messages.list(limit=1)[0]
@@ -59,6 +60,10 @@ def parse_msg(user_msg, phone):
         return ("Commands: \n To Submit Filepath ------- submit filepath\
                 \n To\nView Job Status ------- status JOB-ID \n To Delete\
                 Job ------- delete JOB-ID")
+    
+    elif cmd.lower() == "demo-time":
+        #return f"IT'S TIME EVERYONE!"
+        return emoji.emojize("IT'S DEMO TIME!!! :partying_face: :partying_face: :partying_face: :partying_face: :partying_face: :partying_face: :party_popper: :party_popper: :party_popper:")
 
     else:
         return "Error"

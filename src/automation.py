@@ -3,15 +3,15 @@ import time
 from ccq_api import ccq_stat
 from twilio.rest import Client
 
-account_sid = "AC4d1c5954d9228371bcd3fce922093c26"
-auth_token = "071302b5888b57adbd7ac8bb3c482941"
-
 #account_sid = os.environ.get('TWILIO_ACC_SID')
 #auth_token = os.environ.get('TWILIO_AUTH_TOK')
 #if not account_sid or not auth_token:
 #    raise ValueError('TWILIO_ACC_SID and TWILIO_AUTH_TOK envvars must be set')
-client = Client(account_sid, auth_token)
 
+account_sid = "TWILIO_SID"
+auth_token = "TWILIO_AUTH_TOKEN"
+
+client = Client(account_sid, auth_token)
 
 def ccq_stat_auto(phone, jid):
     running_chk = False
@@ -32,6 +32,7 @@ def ccq_stat_auto(phone, jid):
             break
 
         time.sleep(6)
+
 
 def send_text(text_2_send, phone):
     sent_data = client.messages.create(

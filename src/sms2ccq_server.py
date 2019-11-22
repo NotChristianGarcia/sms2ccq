@@ -1,6 +1,6 @@
 from threading import Thread
 from flask import Flask, request
-from messaging_api import process_msg
+from messaging import process_msg
 
 app = Flask(__name__)
 
